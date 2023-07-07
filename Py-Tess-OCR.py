@@ -14,6 +14,10 @@ title = "Py-Tess-OCR"
 tesseract_path = r'Tesseract\tesseract.exe'
 poppler_path = r'Poppler\Library\bin'
 
+# For hide subprocess terminal
+startupinfo = subprocess.STARTUPINFO()
+startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+
 # For store selected languages
 selected_languages = []
 # Default output file name placeholder
@@ -64,7 +68,8 @@ def process_files(path, clipb=False):
 
 def get_available_languages():
     command = [tesseract_path, '--list-langs']
-    output = subprocess.check_output(command).decode('utf-8').strip()
+    output = subprocess.check_output(
+        command, startupinfo=startupinfo).decode('utf-8').strip()
     lang_list = output.splitlines()[1:]
     lang_list.remove('osd')
     return lang_list
@@ -93,7 +98,7 @@ def process_image(directory, clipb):
                            'stdout', '-l', check_selected_languages(), output_format]
             try:
                 output = subprocess.check_output(
-                    command).decode('utf-8').strip()
+                    command, startupinfo=startupinfo).decode('utf-8').strip()
 
                 # Write the OCR result to the output file
                 f.write('{}\n\n'.format(output))
@@ -112,7 +117,8 @@ def process_image(directory, clipb):
             command = [tesseract_path, directory,
                        'stdout', '-l', check_selected_languages()]
         try:
-            output = subprocess.check_output(command).decode('utf-8').strip()
+            output = subprocess.check_output(
+                command, startupinfo=startupinfo).decode('utf-8').strip()
             copy_to_clipboard(output)
         except subprocess.CalledProcessError as e:
             messagebox.showerror('Conversion Failed',
@@ -144,7 +150,7 @@ def process_pdf(file, clipb):
                            'stdout', '-l', check_selected_languages(), output_format]
             try:
                 output = subprocess.check_output(
-                    command).decode('utf-8').strip()
+                    command, startupinfo=startupinfo).decode('utf-8').strip()
 
                 # Write the OCR result to the output file
                 f.write('## Page {}\n\n'.format(i + 1))
@@ -203,7 +209,7 @@ def process_mix(directory, clipb):
 
                 try:
                     output = subprocess.check_output(
-                        command).decode('utf-8').strip()
+                        command, startupinfo=startupinfo).decode('utf-8').strip()
 
                     # Write the OCR result to the output file
                     f.write('## {}\n\n'.format(image_file))
@@ -226,7 +232,7 @@ def process_mix(directory, clipb):
 
                     try:
                         output = subprocess.check_output(
-                            command).decode('utf-8').strip()
+                            command, startupinfo=startupinfo).decode('utf-8').strip()
 
                         # Write the OCR result to the output file
                         f.write('## {}\n\n'.format(image_file))
@@ -255,7 +261,7 @@ def process_mix(directory, clipb):
 
 
 def convert_to_image(file):
-    return convert_from_path(file, poppler_path)
+    return convert_from_path(file, poppler_path=poppler_path)
 
 
 def copy_to_clipboard(content):
@@ -778,11 +784,11 @@ advance_body_frame = LabelFrame(window, bg='#424200', relief='solid', bd=3)
 advance_oem_frame = LabelFrame(
     advance_body_frame, bg='#424242', relief='solid')
 advance_oem_frame.grid(row=0, column=0, sticky=W+E+S +
-                       N, padx=(20, 10), pady=(10, 5), ipady=5)
+                       N, padx=(10, 10), pady=(10, 5), ipady=5)
 
 advance_psm_frame = LabelFrame(
     advance_body_frame, bg='#424242', relief='solid')
-advance_psm_frame.grid(row=1, column=0,  padx=(20, 10), pady=(5, 10), ipady=3)
+advance_psm_frame.grid(row=1, column=0,  padx=(10, 10), pady=(5, 10), ipady=3)
 
 generate_frame = LabelFrame(window, bg='#424242', relief='flat')
 generate_frame.grid(row=8, column=0)
@@ -851,7 +857,7 @@ for index in range(len(available_languages)):
         lang.select()
 
 advance_head_var = IntVar()
-advance_head_checkbutton = Checkbutton(advance_head_frame, indicatoron=0, text="Advance Options", width=94, variable=advance_head_var, font=("Helvetica", "9", "bold"),
+advance_head_checkbutton = Checkbutton(advance_head_frame, indicatoron=0, text="Advance Options", width=91, variable=advance_head_var, font=("Helvetica", "9", "bold"),
                                        bg="#424242", fg="White", selectcolor="#2c4c66", activebackground="#424242", command=advance_toggle)
 advance_head_checkbutton.grid(
     row=0, column=0, padx=(8, 8), pady=2, sticky=W+E)
