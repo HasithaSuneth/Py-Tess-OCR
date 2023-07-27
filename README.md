@@ -49,6 +49,28 @@ Once you have chosen your settings, click on the 'Generate' button to initiate t
 7. **Efficient Clipboard Integration:** <br>
 Alternatively, if you prefer to copy the output details directly to the clipboard without generating a file, click on the 'Clipboard' icon. After receiving the successful message, paste the extracted content to the required location.
 
+## Installation Guide:
+
+**Windows System:** <br>
+- For Windows systems, no installation process is needed. Users can simply extract the files and use the application as a portable application.
+
+**Linux System:** <br>
+1. **Install Tesseract OCR Engine:** <br>
+Begin the Linux installation process by installing the Tesseract OCR engine. This can typically be accomplished using the package manager of your Linux distribution. For example:
+```
+sudo apt-get install tesseract-ocr
+```
+2. **Install Poppler Package:** <br>
+Next, ensure you have the Poppler package installed on your system. Poppler is required to handle PDF files. Install it using your package manager, similar to the Tesseract installation:
+```
+sudo apt-get install poppler-utils
+```
+3. **Download and Extract Py-Tess-OCR Linux Edition:** <br>
+Download the Py-Tess-OCR Linux edition package and extract its contents. Once extracted, the application can be used as a portable application.
+```
+wget https://github.com/HasithaSuneth/Py-Tess-OCR/releases/download/v1.0/Py-Tess-OCR.v1.0.Linux.zip
+```
+
 ## Step-by-Step Guide to Adding New Languages to Py-Tess-OCR:
 
 1. **Download the Required Language:** <br>
@@ -57,10 +79,15 @@ Begin by visiting Tesseract OCR's official GitHub page and accessing the desired
 - [Language Data - Best](https://github.com/tesseract-ocr/tessdata_best)
 - [Language Keywords](https://tesseract-ocr.github.io/tessdoc/Data-Files-in-different-versions.html)
 
-3. **Placement of Language Data:** <br>
-After downloading the `'<language-name>.traindata'` file, navigate to the `Tesseract/tessdata` location. Place the downloaded language data file in this directory to ensure proper accessibility within the Py-Tess-OCR application.
-
-4. **Accessing the New Language:** <br>
+2. **Placement of Language Data:** <br>
+After downloading the `'<language-name>.traindata'` file, navigate to the (`Tesseract/tessdata` | `Windows`) (`/usr/share/tesseract-ocr/5/tessdata/` | `Linux`) location. Place the downloaded language data file in this directory to ensure proper accessibility within the Py-Tess-OCR application.
+```
+# In Linux systems, the user may require to change the downloaded language file permission.
+sudo chmod 644 /usr/share/tesseract-ocr/5/tessdata/<language-name>.traineddata
+```
+3. **Accessing the New Language:** <br>
 With the language data successfully placed in the designated directory, the newly added language becomes readily accessible within the Py-Tess-OCR application. Users can now leverage this language option for enhanced multilingual text extraction capabilities.
 
-## Download: [Py-Tess-OCR](https://github.com/HasithaSuneth/Py-Tess-OCR/releases/tag/v1.0)
+## Download: <br>
+- [Py-Tess-OCR (Windows)](https://github.com/HasithaSuneth/Py-Tess-OCR/releases/download/v1.0/Py-Tess-OCR.v1.0.Winx64.rar)
+- [Py-Tess-OCR (Linux)](https://github.com/HasithaSuneth/Py-Tess-OCR/releases/download/v1.0/Py-Tess-OCR.v1.0.Linux.zip)
